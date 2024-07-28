@@ -53,6 +53,9 @@ return {
           { name = 'buffer' },
           { name = 'path' },
         }),
+        experimental = {
+          ghost_text = true,  -- Enable ghost text
+        },
       })
 
       -- Use buffer source for `/` and `?` (if you enabled `native_menu`, this won't work anymore).
