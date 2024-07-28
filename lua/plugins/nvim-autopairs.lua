@@ -56,6 +56,7 @@ return {
       npairs.add_rules({
         -- Add matching \] when typing \[
         Rule("\\[", "\\]", "tex"),
+        Rule("\\(", "\\)", "tex"),
 
 	-- Add matching $ when typing $, only if not followed or preceded by another $
 	Rule("$", "$", "tex")

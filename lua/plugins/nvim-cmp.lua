@@ -13,6 +13,7 @@ return {
     config = function()
       local cmp = require('cmp')
       local luasnip = require('luasnip')
+      local codeium = require("codeium")
 
       cmp.setup({
         snippet = {
@@ -46,6 +47,7 @@ return {
           end, { 'i', 's' }),
         }),
         sources = cmp.config.sources({
+          { name = "codeium" },
           { name = 'nvim_lsp' },
           { name = 'luasnip' },
           { name = 'buffer' },
