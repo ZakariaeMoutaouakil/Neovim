@@ -57,23 +57,28 @@ return {
         -- Add matching \] when typing \[
         Rule("\\[", "\\]", "tex"),
 
-        -- Add matching $ when typing $
-        Rule("$", "$", "tex")
-          :with_pair(cond.not_before_regex("\\"))
-          :with_pair(cond.not_after_regex("\\"))
-          :with_pair(function(opts)
-            local last_char = opts.line:sub(opts.col - 1, opts.col - 1)
-            if last_char == "$" then
-              -- Don't pair if we're between $$
-              return false
-            end
-            return true
-          end),
+	-- Add matching $ when typing $, only if not followed or preceded by another $
+	Rule("$", "$", "tex")
+	  :with_pair(cond.not_before_regex("\\"))
+	  :with_pair(cond.not_after_regex("\\"))
+	  :with_pair(function(opts)
+	    local before_last_char = opts.line:sub(opts.col - 2, opts.col - 2)
+	    local last_char = opts.line:sub(opts.col - 1, opts.col - 1)
+	    if last_char == "$" and before_last_char ~= "$" then
+	      -- Don't pair if we're between $$
+	      return false
+	    end
+	    return true
+	  end),
 
-        -- Add matching $$ when typing $$
-        Rule("$$", "$$", "tex")
-          :with_pair(cond.not_before_regex("\\"))
-          :with_pair(cond.not_after_regex("\\"))
+	-- Add matching $$ when typing $$, preventing overlapping with single $
+	Rule("$$", "$$", "tex")
+	  :with_pair(cond.not_before_regex("\\"))
+	  :with_pair(cond.not_after_regex("\\"))
+	  :with_pair(function(opts)
+	    local last_two_chars = opts.line:sub(opts.col - 2, opts.col - 1)
+	    return last_two_chars ~= "$$"
+	  end)
       })
 
       -- If you want to automatically add `(` after selecting a function or method
