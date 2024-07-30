@@ -9,11 +9,18 @@ return {
       "hrsh7th/cmp-cmdline",
       "L3MON4D3/LuaSnip",
       "saadparwaiz1/cmp_luasnip",
+      "uga-rosa/cmp-dictionary",
     },
     config = function()
       local cmp = require('cmp')
       local luasnip = require('luasnip')
       local codeium = require("codeium")
+      local dict = require("cmp_dictionary")
+
+      dict.setup({
+        paths = { "/home/pc/dictionary" },
+        exact_length = 2,
+      })
 
       cmp.setup({
         snippet = {
@@ -52,9 +59,13 @@ return {
           { name = 'luasnip' },
           { name = 'buffer' },
           { name = 'path' },
+          { name = 'dictionary', keyword_length = 1 },
         }),
         experimental = {
           ghost_text = true,  -- Enable ghost text
+        },
+    	completion = {
+          keyword_length = 2,
         },
       })
 
