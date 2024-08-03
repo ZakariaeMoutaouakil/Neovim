@@ -10,6 +10,7 @@ return {
       "L3MON4D3/LuaSnip",
       "saadparwaiz1/cmp_luasnip",
       "uga-rosa/cmp-dictionary",
+      "f3fora/cmp-spell",
     },
     config = function()
       local cmp = require('cmp')
@@ -19,7 +20,7 @@ return {
 
       dict.setup({
         paths = { "/home/pc/dictionary" },
-        exact_length = 2,
+        exact_length = 4,
       })
 
       cmp.setup({
@@ -59,13 +60,23 @@ return {
           { name = 'luasnip' },
           { name = 'buffer' },
           { name = 'path' },
-          { name = 'dictionary', keyword_length = 1 },
+          { name = 'dictionary', keyword_length = 4 },
+	  {
+            name = "spell",
+            option = {
+                keep_all_entries = false,
+                enable_in_context = function()
+                    return true
+                end,
+                preselect_correct_word = true,
+            },
+          },
         }),
         experimental = {
           ghost_text = true,  -- Enable ghost text
         },
     	completion = {
-          keyword_length = 2,
+          keyword_length = 4,
         },
       })
 
